@@ -1,4 +1,4 @@
-package org.example.project
+package org.example.project.pdf
 
 import org.apache.pdfbox.pdmodel.PDDocument
 import org.apache.pdfbox.pdmodel.PDPage
@@ -6,7 +6,7 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream
 import org.apache.pdfbox.pdmodel.font.PDType1Font
 import java.io.File
 
-fun gerarPDF(nomeArquivo:String,nome:String,idade:String){
+fun gerarPDF(nomeArquivo:String,nome:String,idade:String,checked:String){
 
     val documento = PDDocument()
     val pagina = PDPage()
@@ -21,6 +21,8 @@ fun gerarPDF(nomeArquivo:String,nome:String,idade:String){
         conteudo.showText("Nome: $nome")
         conteudo.newLineAtOffset(0f,-20f)
         conteudo.showText("Idade $idade")
+        conteudo.newLineAtOffset(0f,-20f)
+        conteudo.showText("Check Box Selecionada $checked")
         conteudo.endText()
     }
     documento.save(File(nomeArquivo))
