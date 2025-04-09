@@ -35,9 +35,6 @@ kotlin {
         }
     }
 }
-dependencies {
-
-}
 
 
 compose.desktop {
