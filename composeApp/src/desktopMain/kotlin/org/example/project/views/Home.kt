@@ -23,9 +23,15 @@ fun Home() {
     var nomeProjeto by remember { mutableStateOf("") }
     var localColeta by remember { mutableStateOf("") }
     var dataColeta by remember { mutableStateOf("") }
+    var horaColeta by remember { mutableStateOf("") }
     var responsalvelColeta by remember { mutableStateOf("") }
     var numeroAmostra by remember { mutableStateOf("") }
+    var responsavelRecebimento by remember { mutableStateOf("") }
+    var responsavelColeta by remember { mutableStateOf("") }
     val opcoesLista = remember { mutableStateListOf<String>() }
+    val opcoesTratamento = remember { mutableStateListOf<String>() }
+    val usoDaAgua = remember { mutableStateListOf<String>() }
+    val origemAmostra = remember { mutableStateListOf<String>() }
 
     val scrollState = rememberScrollState()
     Column(
@@ -58,6 +64,10 @@ fun Home() {
             value = localColeta, onValueChange = { localColeta = it}, label = { Text("Local da Coleta")}
         )
         Spacer(modifier = Modifier.height(10.dp))
+        OutlinedTextField(
+            value = horaColeta, onValueChange = { horaColeta = it}, label = { Text("Hora")}
+        )
+        Spacer(modifier = Modifier.height(10.dp))
        OutlinedTextField(
             value = dataColeta,
             onValueChange = { newValue ->
@@ -67,19 +77,25 @@ fun Home() {
             placeholder = { Text("dd/MM/yyyy") }
         )
         Spacer(modifier = Modifier.height(10.dp))
-
         OutlinedTextField(
-            value = responsalvelColeta, onValueChange = { responsalvelColeta = it}, label = { Text("Responsavel pela Coleta")}
+            value = responsavelColeta, onValueChange = { responsavelColeta = it}, label = { Text("Responsavel pela Coleta")}
         )
         Spacer(modifier = Modifier.height(10.dp))
 
         OutlinedTextField(
             value = numeroAmostra, onValueChange = { numeroAmostra = it}, label = { Text("Numero de Amostras")}
         )
+
+        Spacer(modifier = Modifier.height(10.dp))
+        OutlinedTextField(
+            value = responsavelRecebimento, onValueChange = { responsavelRecebimento = it}, label = { Text("Responsavel Pelo Recebimento")}
+        )
         Spacer(modifier = Modifier.height(10.dp))
 
+        Text("Ponto de Coleta")
+        //TODO adicionar as checkboxes aqui
         // Criando as checkboxes para cada opção disponível
-        lista.forEach { opcao ->
+        pontoColeta.forEach { opcao ->
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Checkbox(
                     checked = opcao in opcoesLista,
@@ -94,8 +110,68 @@ fun Home() {
                 Text(opcao)
             }
         }
+
+        Spacer(modifier = Modifier.height(10.dp))
+        Text("Tratamento da Água")
+
+       //Tratamento da Agua
+        tratamentoAgua.forEach { opcao ->
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(
+                    checked = opcao in opcoesTratamento,
+                    onCheckedChange = { isChecked ->
+                        if (isChecked) {
+                            opcoesTratamento.add(opcao)
+                        } else {
+                            opcoesTratamento.remove(opcao)
+                        }
+                    }
+                )
+                Text(opcao)
+            }
+        }
+
+        Spacer(modifier = Modifier.height(10.dp))
+        Text("Uso preopoderante da Água")
+        usoDaAguaList.forEach { opcao ->
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(
+                    checked = opcao in usoDaAgua,
+                    onCheckedChange = { isChecked ->
+                        if (isChecked) {
+                            usoDaAgua.add(opcao)
+                        } else {
+                            usoDaAgua.remove(opcao)
+                        }
+                    }
+                )
+                Text(opcao)
+            }
+        }
+
+        Spacer(modifier = Modifier.height(10.dp))
+        Text("Origem da amostra")
+        origemAmostraList.forEach { opcao ->
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Checkbox(
+                    checked = opcao in origemAmostra,
+                    onCheckedChange = { isChecked ->
+                        if (isChecked) {
+                            origemAmostra.add(opcao)
+                        } else {
+                            origemAmostra.remove(opcao)
+                        }
+                    }
+                )
+                Text(opcao)
+            }
+        }
+
+
         Button(onClick = {
-            PdfPost(nomeAluno,opcoesLista.toList())
+            PdfPost(nomeAluno,fone,email,
+                nomeProjeto,localColeta,horaColeta,dataColeta,
+                numeroAmostra,responsavelColeta,opcoesLista.toList(),opcoesTratamento.toList(),usoDaAgua.toList(),origemAmostra.toList())
         }) {
             Text("Gerar PDF")
         }
