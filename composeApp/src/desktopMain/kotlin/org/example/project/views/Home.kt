@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.example.project.viewModels.PdfPost
 import org.example.project.models.*
+import org.example.project.viewModels.formatarData
 
 @Composable
 fun Home() {
@@ -57,9 +58,13 @@ fun Home() {
             value = localColeta, onValueChange = { localColeta = it}, label = { Text("Local da Coleta")}
         )
         Spacer(modifier = Modifier.height(10.dp))
-
-        OutlinedTextField(
-            value = dataColeta, onValueChange = { dataColeta = it}, label = { Text("Data da Coleta")}
+       OutlinedTextField(
+            value = dataColeta,
+            onValueChange = { newValue ->
+                dataColeta = formatarData(newValue)
+            },
+            label = { Text("Data Coleta") },
+            placeholder = { Text("dd/MM/yyyy") }
         )
         Spacer(modifier = Modifier.height(10.dp))
 
