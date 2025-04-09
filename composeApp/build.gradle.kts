@@ -21,14 +21,22 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
+            implementation(compose.material3)
+            implementation(compose.materialIconsExtended)
+
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
             // https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox
             implementation("org.apache.pdfbox:pdfbox:2.0.1")
             implementation(libs.kotlinx.coroutines.swing)
+            implementation(compose.desktop.currentOs)
+
         }
     }
+}
+dependencies {
+
 }
 
 

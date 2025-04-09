@@ -1,3 +1,10 @@
 package org.example.project.models
 
-data class AnaliseAluno(val nome:String)
+
+val lista= listOf(
+    "ph",
+    "Cor",
+    "Turbidez",
+    "Cloro Residual",
+    "Coliformes Totais",
+    "Coliformes Fecais",)

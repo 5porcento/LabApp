@@ -1,6 +1,6 @@
 package org.example.project.views
 
-import FichaAnaliseViewModel
+
 import androidx.compose.material.Text
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
@@ -86,9 +86,6 @@ fun Tela2() {
                document.close()
            }
        }
-
-
-
 
        Button(onClick = {
            gerarPDFComPDFBox(opcoesSelecionadas.toList())

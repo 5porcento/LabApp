@@ -1,6 +1,5 @@
 package org.example.project.views
 
-import FichaAnaliseViewModel
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.Text
