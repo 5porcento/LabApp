@@ -1,4 +1,4 @@
-package org.example.project.viewModels
+package org.example.project.pdf
 
 import org.apache.pdfbox.pdmodel.PDDocument
 import org.apache.pdfbox.pdmodel.PDPage
@@ -82,7 +82,7 @@ fun PdfPost(
         escreverLista(origemAmostra)
 
         contentStream.close()
-        val file = File("Teste.pdf")
+        val file = File("Ficha_do_Aluno.pdf")
         document.save(file)
 
     } catch (e: Exception) {

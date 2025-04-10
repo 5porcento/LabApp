@@ -11,7 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import org.example.project.viewModels.PdfPost
+import org.example.project.pdf.PdfPost
 import org.example.project.models.*
 import org.example.project.viewModels.formatarData
 
