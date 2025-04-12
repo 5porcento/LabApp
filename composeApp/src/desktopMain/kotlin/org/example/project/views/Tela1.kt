@@ -11,7 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.example.project.models.formaPagamentoList
-import org.example.project.models.tratamentoAgua
+import org.example.project.pdf.pdfOrcamento
 import org.example.project.viewModels.CampoTexto
 import org.example.project.viewModels.SecaoFormulario
 
@@ -41,6 +41,7 @@ fun Tela1() {
     var totalDiasTrabalhado  by remember { mutableStateOf("") }
     var valor by remember { mutableStateOf("") }
     var desconto by remember { mutableStateOf("") }
+    var valorFinal by remember { mutableStateOf("") }
     val formaDePagamento = remember { mutableStateListOf<String>() }
     val scrollState = rememberScrollState()
 
@@ -85,6 +86,7 @@ fun Tela1() {
         SecaoFormulario("Do Pagamento") {
             CampoTexto(valor, { valor = it }, "Valor (R$)")
             CampoTexto(desconto, { desconto = it }, "Desconto de até 20%")
+            CampoTexto(valorFinal, { valorFinal = it }, "Desconto de até 20%")
         }
 
         Text("Forma de Pagamento")
@@ -104,10 +106,15 @@ fun Tela1() {
             }
         }
 
-//        Spacer(modifier = Modifier.height(30.dp))
-//        Button(onClick = { /* salvar ou avançar */ }) {
-//            Text("Salvar")
-//        }
+        Spacer(modifier = Modifier.height(30.dp))
+
+        Button(onClick = { pdfOrcamento(
+            nomeCliente, cnpj, nomeComercial, siteEmpresa, endereco,
+            telefone, emailEmpresa, nomeRepresentante, foneRepresentante, emailRepresentante,
+            nomeLaboratorio, siglaLaboratorio, nomeCoordenador, cpfCoordenador, tecnico1,
+            cpfTecnico1, tecnico2, cpfTecnico2, detalhesDoServico,
+            dataInicio, dataTermino, totalDiasTrabalhado , valor, desconto,valorFinal,formaDePagamento.toList()
+        )}){ Text("Gerar PDF")}
     }
 }
 

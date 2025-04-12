@@ -12,7 +12,7 @@ fun pdfOrcamento(
  telefone:String, emailEmpresa:String, nomeRepresentante:String, foneRepresentante:String, emailRepresentante:String,
  nomeLaboratorio:String, siglaLaboratorio:String, nomeCoordenador:String, cpfCoordenador:String, tecnico1:String,
  cpfTecnico1:String, tecnico2:String, cpfTecnico2:String, detalhesDoServico:String,
- dataInicio:String, dataTermino:String, totalDiasTrabalhado :String, valor:String, desconto:String,
+ dataInicio:String, dataTermino:String, totalDiasTrabalhado :String, valor:String, desconto:String,valorFinal:String,formaDePagamento:List<String>
 ){
     val document = PDDocument()
     val page = PDPage()
@@ -47,8 +47,10 @@ fun pdfOrcamento(
         escreverTitulo("Dados do Contratante :")
         val dadosContratante = listOf(
             "Razão Social/Nome Completo: $nomeCliente",
+            "Nome Comercial: $nomeComercial",
             "Fone: $foneRepresentante",
-            "Email: $emailEmpresa",
+            "Email: $emailRepresentante",
+            "Email da Empresa: $emailEmpresa",
             "Endereço Completo: $endereco",
             "Nome do Representante: $nomeRepresentante",
             "Site da empresa: $siteEmpresa",
@@ -71,37 +73,36 @@ fun pdfOrcamento(
         )
         escreverLista(dadosDoLab)
 
-        escreverTitulo("Dados do Laboratório Prestador Do Serviço :")
+        escreverTitulo("Dados do Serviço:")
         val dadosDoservico = listOf(
-            "Nome do Laboratorio: $nomeLaboratorio",
-            "Fone: $siglaLaboratorio",
-            "Nome do Coodernador Reponsavel pela Execução do Serviço: $nomeCoordenador",
-            "CPF: $cpfCoordenador",
-            "Nome do Tecnico Reponsavel pela Execução do Serviço: $tecnico1",
-            "CPF: $cpfTecnico1",
-            "Nome do Tecnico Reponsavel pela Execução do Serviço : $tecnico2",
-            "CPF: $cpfTecnico2",
+            "Necessidades do demandante,serviços a serem execultados e resultados a serem entregues: $detalhesDoServico",
+            "Data de inicio: $dataInicio",
+            "Data de Termibo: $dataTermino",
+            "Total de dias Trabalhados: $totalDiasTrabalhado"
         )
         escreverLista(dadosDoservico)
 
+        escreverTitulo("Pagamento:")
+        val dadosDoPagamento = listOf(
+            "Valor: $valor",
+            "Desconto de ate 20%: $desconto",
+            "Valor Final(R$): $valorFinal",
+        )
+        escreverLista(dadosDoPagamento)
+
+        //TODO adicionar esse texto ao PDF gerado
+//        "Dados bancários para pagamento (somente via transferência ou depósito):\n" +
+//                "Banco do Brasil\n" +
+//                "Agência: 3702-8\n" +
+//                "Conta Corrente: 35.174-1\n" +
+//                "Razão Social/CNPJ: Fundação de Ciência e Tecnologia Guamá - 11.024.200/0001-09"
+
         // Parâmetros Selecionados
-//        escreverTitulo("Parâmetros Selecionados:")
-//        escreverLista(opcoes)
-
-        // Tratamento da Água
-//        escreverTitulo("Tratamento da Água:")
-//        escreverLista(opcoesTratamento)
-
-        // Uso da Água
-//        escreverTitulo("Uso da Água:")
-//        escreverLista(usoDaAgua)
-
-        // Origem da Amostra
-//        escreverTitulo("Origem da Amostra:")
-//        escreverLista(origemAmostra)
+        escreverTitulo("Forma de Pagamento:")
+        escreverLista(formaDePagamento)
 
         contentStream.close()
-        val file = File("Ficha_do_Aluno.pdf")
+        val file = File("Ficha_de_Orçamento.pdf")
         document.save(file)
 
     } catch (e: Exception) {
