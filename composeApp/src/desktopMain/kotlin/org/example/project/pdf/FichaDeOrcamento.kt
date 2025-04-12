@@ -19,8 +19,19 @@ fun pdfOrcamento(
     document.addPage(page)
 
     try {
-        val contentStream = PDPageContentStream(document, page)
+        var contentStream = PDPageContentStream(document, page)
         var yPosition = 700f
+
+
+        fun verificarEspaco(alturaMinima: Float = 50f) {
+            if (yPosition <= alturaMinima) {
+                contentStream.close()
+                val novaPagina = PDPage()
+                document.addPage(novaPagina)
+                yPosition = 750f
+                contentStream = PDPageContentStream(document, novaPagina)
+            }
+        }
 
         fun escreverTitulo(titulo: String) {
             contentStream.setFont(PDType1Font.HELVETICA_BOLD, 14f)
@@ -29,6 +40,7 @@ fun pdfOrcamento(
             contentStream.showText(titulo)
             contentStream.endText()
             yPosition -= 20f
+            verificarEspaco()
         }
 
         fun escreverLista(lista: List<String>) {
@@ -41,7 +53,10 @@ fun pdfOrcamento(
                 yPosition -= 20f
             }
             yPosition -= 10f
+            verificarEspaco()
         }
+
+
 
         // Informações do usuário
         escreverTitulo("Dados do Contratante :")
@@ -90,16 +105,16 @@ fun pdfOrcamento(
         )
         escreverLista(dadosDoPagamento)
 
-        //TODO adicionar esse texto ao PDF gerado
-//        "Dados bancários para pagamento (somente via transferência ou depósito):\n" +
-//                "Banco do Brasil\n" +
-//                "Agência: 3702-8\n" +
-//                "Conta Corrente: 35.174-1\n" +
-//                "Razão Social/CNPJ: Fundação de Ciência e Tecnologia Guamá - 11.024.200/0001-09"
 
         // Parâmetros Selecionados
         escreverTitulo("Forma de Pagamento:")
         escreverLista(formaDePagamento)
+
+        escreverTitulo("Dados bancários para pagamento (somente via transferência ou depósito):")
+        escreverTitulo("Banco do Brasil")
+        escreverTitulo("Agência: 3702-8")
+        escreverTitulo("Razão Social/CNPJ: Fundação de Ciência e Tecnologia Guamá - 11.024.200/0001-09")
+
 
         contentStream.close()
         val file = File("Ficha_de_Orçamento.pdf")
